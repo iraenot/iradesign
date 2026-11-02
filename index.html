@@ -56,121 +56,6 @@ a:hover{color:oklch(0.5 0.14 295)}
       <h2 style="margin:0;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">Experiments</h2>
       <p style="margin:0;font-size:16px;color:oklch(0.48 0.03 285)">6 cases · click one to open</p>
     </div>
-    <sc-if value="{{ isTiles }}" hint-placeholder-val="{{ true }}">
-    <div style="display:grid;grid-template-columns:repeat({{ cols }},minmax(0,1fr));grid-auto-rows:minmax(250px,auto);grid-auto-flow:dense;gap:16px">
-      <sc-for list="{{ cases }}" as="c" hint-placeholder-count="6">
-        <article id="case-{{ $index }}" style="grid-column:{{ c.gc }};grid-row:{{ c.gr }};background:{{ c.bg }};border-radius:32px;overflow:hidden;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 2px 0 oklch(0.3 0.05 285 / .06)" style-hover="transform:{{ c.tileHoverTf }};box-shadow:0 16px 36px oklch(0.3 0.05 285 / .12)">
-          <sc-if value="{{ c.isClosed }}" hint-placeholder-val="{{ true }}">
-            <button onClick="{{ c.toggle }}" style="all:unset;box-sizing:border-box;width:100%;height:100%;display:flex;flex-direction:column;gap:16px;padding:22px;cursor:pointer">
-              <span style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
-                <span style="display:flex;gap:6px;flex-wrap:wrap">
-                  <span style="background:white;padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(-2deg);box-shadow:0 2px 0 oklch(0.3 0.05 285 / .1)">{{ c.type }}</span>
-                  <span style="background:oklch(1 0 0 / .55);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:500;transform:rotate(1.5deg)">{{ c.area }}</span>
-                </span>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:13px;background:white;border-radius:999px;padding:4px 10px">{{ c.n }}</span>
-              </span>
-              <sc-if value="{{ c.showPreview }}" hint-placeholder-val="{{ false }}">
-                <span style="flex:1;min-height:120px;display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative">
-                  <sc-if value="{{ c.bImg }}" hint-placeholder-val="{{ false }}">
-                    <span style="border-radius:16px;background:white url({{ c.aImg }}) top center/cover no-repeat;filter:grayscale(.6);opacity:.8"></span>
-                    <span style="border-radius:16px;background:white url({{ c.bImg }}) top center/cover no-repeat;box-shadow:0 0 0 3px {{ c.deep }}"></span>
-                  </sc-if>
-                  <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
-                    <span style="border-radius:16px;background:repeating-linear-gradient(135deg,oklch(0.97 0.005 285) 0 10px,white 10px 20px)"></span>
-                    <span style="border-radius:16px;background:repeating-linear-gradient(135deg,{{ c.bgSoft }} 0 10px,white 10px 20px);box-shadow:0 0 0 3px {{ c.deep }}"></span>
-                  </sc-if>
-                  <span style="position:absolute;left:10px;bottom:10px;width:28px;height:28px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">A</span>
-                  <span style="position:absolute;left:calc(50% + 14px);bottom:10px;width:28px;height:28px;border-radius:50%;background:oklch(0.27 0.03 285);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">B</span>
-                </span>
-              </sc-if>
-              <span style="margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:14px">
-                <span style="font-size:clamp(20px,2vw,26px);font-weight:700;letter-spacing:-.02em;line-height:1.1;text-wrap:pretty">{{ c.title }}</span>
-                <span style="display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0">
-                  <span style="font-size:clamp(34px,4vw,52px);font-weight:800;letter-spacing:-.045em;line-height:.95;color:{{ c.deep }}">{{ c.headline }}</span>
-                  <span style="font-size:13px;color:oklch(0.42 0.03 285)">{{ c.headlineLabel }}</span>
-                </span>
-              </span>
-            </button>
-          </sc-if>
-          <sc-if value="{{ c.isOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:26px;animation:fadeUp .5s ease both;display:flex;flex-direction:column;gap:18px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
-                <div style="display:flex;flex-direction:column;gap:12px">
-                  <span style="display:flex;gap:6px;flex-wrap:wrap">
-                    <span style="background:white;padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(-2deg)">{{ c.type }}</span>
-                    <span style="background:oklch(1 0 0 / .55);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:500;transform:rotate(1.5deg)">{{ c.area }}</span>
-                  </span>
-                  <h3 style="margin:0;font-size:clamp(28px,4vw,44px);letter-spacing:-.03em;line-height:1.05;font-weight:800">{{ c.title }}</h3>
-                </div>
-                <button onClick="{{ c.toggle }}" aria-label="Close" style="all:unset;cursor:pointer;flex-shrink:0;width:46px;height:46px;border-radius:50%;background:oklch(0.27 0.03 285);color:white;display:flex;align-items:center;justify-content:center;font-size:22px;transform:rotate(45deg);transition:transform .3s" style-hover="transform:rotate(135deg)">+</button>
-              </div>
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
-                <div style="display:flex;flex-direction:column;gap:14px">
-                  <p style="margin:0;font-size:19px;line-height:1.5;text-wrap:pretty">{{ c.intro }}</p>
-                  <div style="background:white;border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:18px">
-                    <div>
-                      <div style="display:inline-block;background:oklch(0.92 0.06 350);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(-2deg);margin-bottom:10px">The challenge</div>
-                      <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ c.challenge }}</p>
-                    </div>
-                    <div>
-                      <div style="display:inline-block;background:oklch(0.92 0.06 160);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(2deg);margin-bottom:10px">The approach</div>
-                      <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ c.approach }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div style="background:oklch(0.27 0.03 285);color:white;border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:16px">
-                  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
-                    <span style="font-weight:700;font-size:18px">Results</span>
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.82 0.02 285)">{{ c.meta }}</span>
-                  </div>
-                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
-                    <sc-for list="{{ c.metrics }}" as="m" hint-placeholder-count="4">
-                      <div style="background:oklch(1 0 0 / .07);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
-                        <span style="font-size:14px;color:oklch(0.85 0.02 285)">{{ m.label }}</span>
-                        <span style="font-size:38px;font-weight:800;letter-spacing:-.04em;line-height:1;color:{{ m.color }};font-variant-numeric:tabular-nums">{{ m.delta }}</span>
-                        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.8 0.02 285);font-variant-numeric:tabular-nums">{{ m.range }}</span>
-                      </div>
-                    </sc-for>
-                  </div>
-                </div>
-              </div>
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
-                <figure style="margin:0;background:white;border-radius:24px;padding:14px">
-                  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px;gap:8px">
-                    <span style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px"><span style="width:30px;height:30px;border-radius:50%;background:oklch(0.93 0.01 285);display:flex;align-items:center;justify-content:center;font-weight:800">A</span>Control · before</span>
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.48 0.03 285)">{{ c.aRate }}</span>
-                  </div>
-                  <sc-if value="{{ c.aImg }}" hint-placeholder-val="{{ false }}">
-                    <img src="{{ c.aImg }}" alt="Variant A screenshot" style="display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
-                  </sc-if>
-                  <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
-                    <div style="aspect-ratio:4/3;border-radius:16px;background:repeating-linear-gradient(135deg,oklch(0.95 0.01 285) 0 10px,oklch(0.975 0.005 285) 10px 20px);display:flex;align-items:center;justify-content:center">
-                      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.5 0.03 285);background:white;padding:6px 10px;border-radius:8px">screenshot · variant A</span>
-                    </div>
-                  </sc-if>
-                </figure>
-                <figure id="win-{{ $index }}" style="margin:0;background:white;border-radius:24px;padding:14px;box-shadow:0 0 0 3px {{ c.deep }}">
-                  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px;gap:8px">
-                    <span style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px"><span style="width:30px;height:30px;border-radius:50%;background:{{ c.bg }};display:flex;align-items:center;justify-content:center;font-weight:800">B</span>Variant · after</span>
-                    <button onClick="{{ c.celebrate }}" style="all:unset;cursor:pointer;background:oklch(0.27 0.03 285);color:white;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;transform:rotate(3deg);transition:transform .25s" style-hover="transform:rotate(-4deg) scale(1.08)">Winner ★ {{ c.bRate }}</button>
-                  </div>
-                  <sc-if value="{{ c.bImg }}" hint-placeholder-val="{{ false }}">
-                    <img src="{{ c.bImg }}" alt="Variant B screenshot" style="display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
-                  </sc-if>
-                  <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
-                    <div style="aspect-ratio:4/3;border-radius:16px;background:repeating-linear-gradient(135deg,{{ c.bg }} 0 10px,{{ c.bgSoft }} 10px 20px);display:flex;align-items:center;justify-content:center">
-                      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.42 0.03 285);background:white;padding:6px 10px;border-radius:8px">screenshot · variant B</span>
-                    </div>
-                  </sc-if>
-                </figure>
-              </div>
-            </div>
-          </sc-if>
-        </article>
-      </sc-for>
-    </div>
-    </sc-if>
-    <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ cases }}" as="c" hint-placeholder-count="6">
         <article id="case-{{ $index }}" style="background:{{ c.bg }};border-radius:32px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 2px 0 oklch(0.3 0.05 285 / .06)" style-hover="transform:{{ c.hoverTf }};box-shadow:0 14px 34px oklch(0.3 0.05 285 / .1)">
@@ -258,7 +143,6 @@ a:hover{color:oklch(0.5 0.14 295)}
         </article>
       </sc-for>
     </div>
-    </sc-if>
   </section>
 
   <section id="about" style="max-width:1160px;margin:0 auto;padding:60px 20px">
@@ -303,7 +187,7 @@ a:hover{color:oklch(0.5 0.14 295)}
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;galleryLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Tiles&quot;,&quot;List&quot;],&quot;default&quot;:&quot;Tiles&quot;,&quot;tsType&quot;:&quot;'Tiles' | 'List'&quot;,&quot;section&quot;:&quot;Gallery&quot;},&quot;customCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;confetti&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;wobble&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;customCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;confetti&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;wobble&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
 const HUES = [350, 60, 95, 160, 230, 295];
 const CASES = [
   { title: 'Pricing page CTA', type: 'A/B test', area: 'Pricing', headlineIdx: 0,
@@ -356,18 +240,14 @@ const TOOLS = ['Figma', 'FigJam', 'Google Analytics 4', 'Hotjar', 'Optimizely', 
 const fmt = (v, unit, d) => unit === '$' ? '$' + v.toFixed(d) : v.toFixed(d) + unit;
 
 class Component extends DCLogic {
-  state = { open: null, p: 1, cols: 4 };
+  state = { open: null, p: 1 };
   confettiRef = React.createRef();
   cursorRef = React.createRef();
   parts = [];
 
   componentDidMount() {
     const c = this.confettiRef.current;
-    const size = () => {
-      const r = devicePixelRatio || 1; c.width = innerWidth * r; c.height = innerHeight * r; c.getContext('2d').setTransform(r, 0, 0, r, 0, 0);
-      const w = Math.min(innerWidth, 1160) - 40, cols = w < 600 ? 1 : w < 900 ? 2 : 4;
-      if (cols !== this.state.cols) this.setState({ cols });
-    };
+    const size = () => { const r = devicePixelRatio || 1; c.width = innerWidth * r; c.height = innerHeight * r; c.getContext('2d').setTransform(r, 0, 0, r, 0, 0); };
     size(); addEventListener('resize', size); this._size = size;
     this._move = e => {
       const el = this.cursorRef.current; if (!el || this.props.customCursor === false) return;
@@ -441,9 +321,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const wobble = this.props.wobble !== false;
-    const { open, p, cols } = this.state;
-    const isTiles = (this.props.galleryLayout ?? 'Tiles') === 'Tiles';
-    const SPANS = { 4: [[1,1],[1,1],[2,2],[1,2],[1,2],[2,1]], 2: [[1,1],[1,1],[2,2],[1,1],[1,1],[2,1]], 1: [[1,1],[1,1],[1,2],[1,1],[1,1],[1,1]] }[cols];
+    const { open, p } = this.state;
     const cases = CASES.map((c, i) => {
       const h = HUES[i], isOpen = open === i, prog = isOpen ? p : 1;
       const metrics = c.metrics.filter(m => m[1] > 0).map(([label, a, b, unit, d]) => {
@@ -460,10 +338,7 @@ class Component extends DCLogic {
       const hd = (b - a) / a * 100;
       return {
         ...c, n: String(i + 1).padStart(2, '0'), isOpen, metrics,
-        aImg: c.aImg || null, bImg: c.bImg || null, noImg: !c.aImg, isClosed: !isOpen,
-        gc: isOpen ? '1 / -1' : `span ${SPANS[i][0]}`, gr: isOpen ? 'auto' : `span ${SPANS[i][1]}`,
-        showPreview: SPANS[i][0] > 1 || SPANS[i][1] > 1,
-        tileHoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 1.2 : -1.2}deg) scale(1.02)` : 'translateY(-4px)',
+        aImg: c.aImg || null, bImg: c.bImg || null, noImg: !c.aImg,
         bg: `oklch(0.92 0.06 ${h})`, bgSoft: `oklch(0.96 0.03 ${h})`, deep: `oklch(0.5 0.13 ${h})`,
         hoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 0.8 : -0.8}deg) scale(1.01)` : 'translateY(-3px)',
         chevTf: isOpen ? 'rotate(45deg)' : 'none',
@@ -479,7 +354,7 @@ class Component extends DCLogic {
       hoverTf: wobble ? `rotate(${i % 2 ? 2 : -2}deg) translateY(-4px)` : 'translateY(-4px)',
     }));
     const tools = TOOLS.map((name, i) => ({ name, bg: `oklch(0.92 0.06 ${HUES[i % 6]})`, rot: wobble ? `${[-3, 2, -1, 3, -2, 1][i % 6]}deg` : '0deg' }));
-    return { cases, steps, tools, isTiles, isList: !isTiles, cols, confettiRef: this.confettiRef, cursorRef: this.cursorRef };
+    return { cases, steps, tools, confettiRef: this.confettiRef, cursorRef: this.cursorRef };
   }
 }
 </script>
